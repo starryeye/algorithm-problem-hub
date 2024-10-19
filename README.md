@@ -1,2 +1,2 @@
 # algorithm-problem-hub
-This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+Leetcode 를 제외한 기타 알고리즘 문제 풀이를 모음
