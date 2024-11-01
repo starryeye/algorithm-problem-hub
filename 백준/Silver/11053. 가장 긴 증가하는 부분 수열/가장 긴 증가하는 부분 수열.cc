@@ -53,3 +53,49 @@ int main() {
 
 	return 0;
 }
+
+
+/*
+// 위의 방법은 DP 로 풀고 O(n^2) 이다.
+// 아래는 그리디 + 이진 탐색으로 푸는 방법 O(n log n)
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);   // 원본 수열을 저장하는 벡터
+    vector<int> lis;      // LIS를 저장하는 벡터 (이진 탐색을 위해 유지)
+
+    // 수열 입력
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    // LIS 계산
+    for (int i = 0; i < n; i++) {
+        int current = arr[i];
+
+        // LIS 배열에서 `current`의 위치를 찾는다.
+        // `current`가 들어갈 위치를 찾아 기존 값을 대체하거나, 끝에 추가.
+        auto pos = lower_bound(lis.begin(), lis.end(), current);
+
+        // pos가 lis의 끝이라면 현재 요소를 LIS에 추가
+        if (pos == lis.end()) {
+            lis.push_back(current);
+        } else {
+            *pos = current;  // 해당 위치의 값 갱신
+        }
+    }
+
+    // lis 벡터의 크기가 최장 증가 부분 수열의 길이
+    cout << lis.size() << endl;
+
+    return 0;
+}
+
+*/
