@@ -16,8 +16,15 @@
 11726. 2×N 타일링 (실3)
 10844. 쉬운 계단 수 (실1)
 13398. 연속합 2 (골5) - Maximum Subarray
-9252. LCS 2 (골4) - LCS
+9252. LCS 2 (골4) - Longest Common Subsequence
 1915. 가장 큰 정사각형 (골4)
 1328. 고층 빌딩 (플5)
 2342. Dance Dance Revolution (골3)
 11049. 행렬 곱셈 순서 (골3)
+
+1912. 연속 합 (실2) - Maximum Subarray
+9251. LCS (골5) - Longest Common Subsequence
+11053. 가장 긴 증가하는 부분 수열 (실2) - Longest Increasing Subsequence
+1509. 팰린드롬 분할 (골1) - Palindrome Partitioning
+15483. 최소 편집 (골3)
+12865. 평범한 배낭 (골5) - Knapsack Problem
