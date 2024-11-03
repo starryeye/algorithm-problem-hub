@@ -1,58 +1,45 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
-
-// Knapsack Problem (배낭 문제)
-// 제한된 용량 내에서 가장 높은 가치를 얻기 위해 선택할 수 있는 물건들을 조합하는 문제.
-
-// 가치는 높으면 높을 수록 좋다. -> max
-// 제한된 용량 -> dp[n] : n 용량까지 제한된 배낭으로 담을 수 있는 최대 가치
 
 int main() {
     
-    int N, K;  // N: 물품의 수, K: 배낭의 최대 무게
+    int N, K;
     cin >> N >> K;
 
-    vector<int> weight(N);  // 각 물품의 무게를 저장하는 배열
-    vector<int> value(N);   // 각 물품의 가치를 저장하는 배열
-
+    vector<int> item_weight(N);
+    vector<int> item_value(N);
     for (int i = 0; i < N; i++) {
-        cin >> weight[i] >> value[i];  // 물품의 무게와 가치 입력
+        cin >> item_weight[i] >> item_value[i];
     }
     
-    vector<int> dp(K + 1, 0); // 가치 최소값 0 으로 초기화
-    dp[0] = 0; // 0 무게 제한, 최대 가치는 0
+    // dp[i][k] 
+    //     상태 : i index 까지 고려, k 까지 제한 (용량)
+    //     값 : 최대 값 (가치)
+    vector<vector<int>> dp(N, vector<int>(K + 1, 0)); // 0으로 초기화
     
-    
-    // 각 물품에 대해 DP 테이블 갱신
-    for (int i = 0; i < N; i++) {  // 모든 물품을 순회
-        
-        // 무게 w를 역순으로 탐색
-        // 정순으로 탐색하면.. 동일한 item 을 여러번 담을 수 있다.
-        for (int w = K; w >= weight[i]; w--) { // weight[i] 보다 작을땐 못담는다.
-            
-            // 현재 물품을 담을지 말지 결정
-            dp[w] = max(dp[w], dp[w - weight[i]] + value[i]);
-            // dp[w]: 현재 배낭 무게가 w일 때 최대 가치 (선택하면, 담지 않는 의미)
-            // dp[w - weight[i]] + value[i]: 물품 i를 추가했을 때의 가치 (선택하면, 담는다는 의미)
+    // 초기화: 0 index item 을 선택할 수 있는 경우 초기값 설정
+    // 선택하지 못하면, 이미 초기화된 0 이다.
+    for (int w = 0; w <= K; w++) {
+        if (item_weight[0] <= w) {
+            dp[0][w] = item_value[0];
         }
     }
-    
-    // 참고
-    // N = 3, K = 5
-    // item 1: 무게 = 1, 가치 = 6
-    // item 2: 무게 = 2, 가치 = 10
-    // item 3: 무게 = 3, 가치 = 12 일때..
-    // 최초   , dp=[0,0,0,0,0,0]
-    // item 1, dp=[0,6,6,6,6,6]
-    // item 2, dp=[0,6,10,16,16,16]
-    // item 3, dp=[0,6,10,12,18,22]
-    
 
-    // 결과 출력: 배낭 최대 무게에서의 최대 가치
-    cout << dp[K] << endl;
-    
+    for (int i = 1; i < N; i++) {
+        for (int w = 0; w <= K; w++) {
+            if (item_weight[i] <= w) {
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - item_weight[i]] + item_value[i]);
+                // dp[i - 1][w] : i index item 선택하지 않음
+                // dp[i - 1][w - item_weight[i]] + item_value[i] : i index item 선택함
+            } else {
+                dp[i][w] = dp[i - 1][w];
+                // i index item 선택할 수 없음
+            }
+        }
+    }
+
+    cout << dp[N - 1][K] << endl;
     return 0;
 }
